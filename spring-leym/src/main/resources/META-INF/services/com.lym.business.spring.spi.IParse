@@ -1,0 +1,2 @@
+com.lym.business.spring.spi.ClassPathResource
+com.lym.business.spring.spi.FileSystemResource
