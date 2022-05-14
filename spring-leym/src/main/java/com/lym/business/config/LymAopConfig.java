@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
+//exposeProxy = true 就算实现的接口也不使用jdk动态代理,强制使用cglib动态代理
 @EnableAspectJAutoProxy(exposeProxy = true)
 public class LymAopConfig {
 

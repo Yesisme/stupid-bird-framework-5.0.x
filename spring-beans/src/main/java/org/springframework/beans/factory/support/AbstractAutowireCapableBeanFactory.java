@@ -489,7 +489,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			//一共调用了九个后置处理器
 
 			//aop给后置处理器一个机会返回一个代理对象,第一次在registerBeanPostProcessors创建bean之前为null
-			//第二次finshBeanFactory已经创建了bean,此时不为空
+			//第二次finishBeanFactory已经创建了bean,此时不为空
 			//解析Aop切面信息进行缓存
 			Object bean = resolveBeforeInstantiation(beanName, mbdToUse);
 			if (bean != null) {

@@ -1,10 +1,12 @@
 package com.lym.business.app;
 
 import com.lym.business.bean.LeImport;
+import com.lym.business.spring.filter.LymFilter;
 import com.lym.business.spring.filter.LymImportBeanDefinitionRegistry;
 import com.lym.business.spring.filter.LymImportSelector;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 
 @Configuration

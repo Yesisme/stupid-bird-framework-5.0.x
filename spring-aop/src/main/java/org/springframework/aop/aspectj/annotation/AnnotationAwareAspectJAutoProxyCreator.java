@@ -47,8 +47,7 @@ import org.springframework.util.Assert;
  * @see org.springframework.aop.aspectj.annotation.AspectJAdvisorFactory
  */
 @SuppressWarnings("serial")
-//AnnotationAwareAspectJAutoProxyCreator实现了
-// SmartInstantiationAwareBeanPostProcessor, BeanFactoryAware
+//AnnotationAwareAspectJAutoProxyCreator实现了SmartInstantiationAwareBeanPostProcessor, BeanFactoryAware
 public class AnnotationAwareAspectJAutoProxyCreator extends AspectJAwareAdvisorAutoProxyCreator {
 
 	@Nullable

@@ -634,6 +634,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	protected void prepareRefresh() {
 		// Switch to active.
 		this.startupDate = System.currentTimeMillis();
+		//是否关闭
 		this.closed.set(false);
 		this.active.set(true);
 
@@ -697,7 +698,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 */
 	protected void prepareBeanFactory(ConfigurableListableBeanFactory beanFactory) {
 		// Tell the internal bean factory to use the context's class loader etc.
+
+		//设置类加载器
 		beanFactory.setBeanClassLoader(getClassLoader());
+		//设置Bean的表达式解析器
 		beanFactory.setBeanExpressionResolver(new StandardBeanExpressionResolver(beanFactory.getBeanClassLoader()));
 		beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
 
@@ -866,17 +870,6 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
-	 * Template method which can be overridden to add context-specific refresh work.
-	 * Called on initialization of special beans, before instantiation of singletons.
-	 * <p>This implementation is empty.
-	 * @throws BeansException in case of errors
-	 * @see #refresh()
-	 */
-	protected void onRefresh() throws BeansException {
-		// For subclasses: do nothing by default.
-	}
-
-	/**
 	 * Add beans that implement ApplicationListener as listeners.
 	 * Doesn't affect other listeners, which can be added without being beans.
 	 */
@@ -901,6 +894,17 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				getApplicationEventMulticaster().multicastEvent(earlyEvent);
 			}
 		}
+	}
+
+	/**
+	 * Template method which can be overridden to add context-specific refresh work.
+	 * Called on initialization of special beans, before instantiation of singletons.
+	 * <p>This implementation is empty.
+	 * @throws BeansException in case of errors
+	 * @see #refresh()
+	 */
+	protected void onRefresh() throws BeansException {
+		// For subclasses: do nothing by default.
 	}
 
 	/**

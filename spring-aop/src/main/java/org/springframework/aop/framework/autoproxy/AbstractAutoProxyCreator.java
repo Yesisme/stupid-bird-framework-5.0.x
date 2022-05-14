@@ -241,7 +241,8 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		return wrapIfNecessary(bean, beanName, cacheKey);
 	}
 
-	//每个bean创建之间都会调用postProcessBeforeInstantiation方法
+	//每个bean创建之前 都会调用postProcessBeforeInstantiation方法
+	// 通过这个方法调用 Object bean = resolveBeforeInstantiation(beanName, mbdToUse);
 	@Override
 	public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
 		Object cacheKey = getCacheKey(beanClass, beanName);

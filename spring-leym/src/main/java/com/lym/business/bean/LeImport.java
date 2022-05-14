@@ -1,7 +1,5 @@
 package com.lym.business.bean;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public class LeImport {
 
 	private Long id;

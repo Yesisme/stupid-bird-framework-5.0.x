@@ -206,6 +206,34 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	}
 
 	/**
+	 * Register an Exception that happened to get suppressed during the creation of a
+	 * singleton bean instance, e.g. a temporary circular reference resolution problem.
+	 * @param ex the Exception to register
+	 */
+	protected void onSuppressedException(Exception ex) {
+		synchronized (this.singletonObjects) {
+			if (this.suppressedExceptions != null) {
+				this.suppressedExceptions.add(ex);
+			}
+		}
+	}
+
+	/**
+	 * Remove the bean with the given name from the singleton cache of this factory,
+	 * to be able to clean up eager registration of a singleton if creation failed.
+	 * @param beanName the name of the bean
+	 * @see #getSingletonMutex()
+	 */
+	protected void removeSingleton(String beanName) {
+		synchronized (this.singletonObjects) {
+			this.singletonObjects.remove(beanName);
+			this.singletonFactories.remove(beanName);
+			this.earlySingletonObjects.remove(beanName);
+			this.registeredSingletons.remove(beanName);
+		}
+	}
+
+	/**
 	 * Return the (raw) singleton object registered under the given name,
 	 * creating and registering a new one if none registered yet.
 	 * @param beanName the name of the bean
@@ -221,7 +249,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 				if (this.singletonsCurrentlyInDestruction) {
 					throw new BeanCreationNotAllowedException(beanName,
 							"Singleton bean creation not allowed while singletons of this factory are in destruction " +
-							"(Do not request a bean from a BeanFactory in a destroy method implementation!)");
+									"(Do not request a bean from a BeanFactory in a destroy method implementation!)");
 				}
 				if (logger.isDebugEnabled()) {
 					logger.debug("Creating shared instance of singleton bean '" + beanName + "'");
@@ -268,34 +296,6 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 				}
 			}
 			return singletonObject;
-		}
-	}
-
-	/**
-	 * Register an Exception that happened to get suppressed during the creation of a
-	 * singleton bean instance, e.g. a temporary circular reference resolution problem.
-	 * @param ex the Exception to register
-	 */
-	protected void onSuppressedException(Exception ex) {
-		synchronized (this.singletonObjects) {
-			if (this.suppressedExceptions != null) {
-				this.suppressedExceptions.add(ex);
-			}
-		}
-	}
-
-	/**
-	 * Remove the bean with the given name from the singleton cache of this factory,
-	 * to be able to clean up eager registration of a singleton if creation failed.
-	 * @param beanName the name of the bean
-	 * @see #getSingletonMutex()
-	 */
-	protected void removeSingleton(String beanName) {
-		synchronized (this.singletonObjects) {
-			this.singletonObjects.remove(beanName);
-			this.singletonFactories.remove(beanName);
-			this.earlySingletonObjects.remove(beanName);
-			this.registeredSingletons.remove(beanName);
 		}
 	}
 
